@@ -1,0 +1,22 @@
+{
+  "name": "youtube-subscriptions-analyzer-v1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "firebase-tools": "^11.16.0",
+    "husky": "^8.0.2",
+    "prettier": "^2.7.1"
+  },
+  "scripts": {
+    "install": "(cd frontend && yarn) && (cd functions && yarn)",
+    "dev": "(cd functions && firebase emulators:start --only auth,functions,firestore)",
+    "start": "(cd frontend && yarn start)",
+    "deploy": "bash deploy.sh",
+    "eslint": "eslint . --fix",
+    "prepare": "husky install"
+  }
+}

@@ -1,0 +1,45 @@
+name: Deploy to Live Channel
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  GOOGLE_CLIENT_ID: "922817243019-f4733utfdl8fhjoh3mi5hgu5qr9069m2.apps.googleusercontent.com"
+  FIREBASE_PROJECT_ID: "pelagic-media-368714"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('yarn.lock', 'frontend/yarn.lock', 'functions/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node_modules-
+
+      - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: npm pkg delete scripts.prepare && yarn
+
+      - name: Build
+        env:
+          REACT_APP_GOOGLE_CLIENT_ID: ${{ env.GOOGLE_CLIENT_ID }}
+          REACT_APP_API_URL: "https://us-central1-${{ env.FIREBASE_PROJECT_ID }}.cloudfunctions.net"
+          DISABLE_ESLINT_PLUGIN: true
+        run: (cd frontend && yarn build)
+
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        env:
+          GOOGLE_CLIENT_ID: ${{ env.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET:
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_PELAGIC_MEDIA_368714 }}"
+          projectId: ${{ env.FIREBASE_PROJECT_ID }}
+          channelId: live
