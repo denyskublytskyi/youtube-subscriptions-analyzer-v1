@@ -10,12 +10,18 @@ import ListItemText from "@mui/material/ListItemText";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 
 import AsyncButton from "../ui-kit/AsyncButton";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const MissingScopesModal = ({ onClose, onConfirm, scopes }) => {
+  const intl = useIntl();
+
   return (
     <>
       <DialogTitle>
-        Additional permissions are required to perform this action
+        <FormattedMessage
+          defaultMessage="Additional permissions are required to perform this action"
+          id="missingScopesModal.title"
+        />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -25,7 +31,12 @@ const MissingScopesModal = ({ onClose, onConfirm, scopes }) => {
                 <ListItemIcon>
                   <YouTubeIcon fontSize="large" />
                 </ListItemIcon>
-                <ListItemText primary="Manage your YouTube account" />
+                <ListItemText
+                  primary={intl.formatMessage({
+                    defaultMessage: "Manage your YouTube account",
+                    id: "missingScopesModal.manageYoutube",
+                  })}
+                />
               </ListItem>
             )}
           </List>

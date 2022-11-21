@@ -2,14 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b3e429f8-f0ee-48e2-9fbb-4e5a47693bf7" name="Changes" comment=":tada: Initial commit">
-      <change afterPath="$PROJECT_DIR$/screenshots/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/screenshots/6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/hooks/useLocalStorage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/hooks/useLocales.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/modules/Home/Chart.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/modules/Home/SubscriptionsList.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/translations/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/translations/uk.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/ui-kit/FullSizeContainer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/ui-kit/LocaleSelect.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/AppContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/AppContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modals/ConfirmationModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modals/ConfirmationModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modals/MissingScopesModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modals/MissingScopesModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/Auth/SignInPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/Auth/SignInPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/Home/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/Home/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/Root/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/Root/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/modules/Root/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/modules/Root/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/getYoutubeSubscriptions.js" beforeDir="false" afterPath="$PROJECT_DIR$/functions/getYoutubeSubscriptions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,35 +49,53 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "TF_FMT": "false",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/denys/Workspace/home/youtube-subscriptions-analyzer-v1/screenshots",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "nodejs_interpreter_path": "/home/denys/.nvm/versions/node/v16.15.1/bin/node",
-    "nodejs_package_manager_path": "yarn",
-    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
-    "ts.external.directory.path": "/home/denys/.local/share/JetBrains/Toolbox/apps/WebStorm/ch-0/221.5080.193/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;TF_FMT&quot;: &quot;false&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/denys/Workspace/home/youtube-subscriptions-analyzer-v1/frontend/src/translations&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;/home/denys/.nvm/versions/node/v16.15.1/bin/node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/denys/.local/share/JetBrains/Toolbox/apps/WebStorm/ch-0/221.5080.193/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src/translations" />
+      <recent name="$PROJECT_DIR$/frontend/translations" />
       <recent name="$PROJECT_DIR$/screenshots" />
       <recent name="$PROJECT_DIR$/frontend" />
       <recent name="$PROJECT_DIR$/frontend/src/modals" />
-      <recent name="$PROJECT_DIR$/frontend/public" />
-      <recent name="$PROJECT_DIR$/functions" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/src" />
       <recent name="$PROJECT_DIR$/functions/lib" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="extract" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/frontend/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="extract" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.extract" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -89,7 +120,9 @@
       <workItem from="1668879605635" duration="8541000" />
       <workItem from="1668928442233" duration="22630000" />
       <workItem from="1668958508072" duration="2934000" />
-      <workItem from="1668969223628" duration="6409000" />
+      <workItem from="1668969223628" duration="7917000" />
+      <workItem from="1669021077600" duration="17290000" />
+      <workItem from="1669062278497" duration="7356000" />
     </task>
     <task id="LOCAL-00001" summary=":tada: Initial commit">
       <created>1668971178476</created>
@@ -182,7 +215,21 @@
       <option name="project" value="LOCAL" />
       <updated>1668974906091</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary=":tada: Initial commit">
+      <created>1668975649916</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1668975649916</updated>
+    </task>
+    <task id="LOCAL-00015" summary=":tada: Initial commit">
+      <created>1668975689168</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1668975689168</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

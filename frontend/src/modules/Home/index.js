@@ -1,109 +1,34 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import countries from "countries-code";
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
+import { useCallback, useEffect, useMemo } from "react";
+import styled from "styled-components/macro";
+import { FormattedMessage, useIntl } from "react-intl";
 import getUnicodeFlagIcon from "country-flag-icons/unicode";
-import formatDistanceToNow from "date-fns/formatDistanceToNow";
 
 import fpCountBy from "lodash/fp/countBy";
-import fpGroupBy from "lodash/fp/groupBy";
 import compose from "lodash/fp/compose";
 import fpOrderBy from "lodash/fp/orderBy";
-import keyBy from "lodash/keyBy";
 
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
-import red from "@mui/material/colors/red";
-
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 
 import { useAppContext } from "../../AppContext";
 import Loader from "../../ui-kit/Loader";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import MuiTooltip from "@mui/material/Tooltip";
 import { useModals } from "../../hooks/useModals";
-import Button from "@mui/material/Button";
-import { useTheme } from "@mui/material";
+import { useLocales } from "../../hooks/useLocales";
+import { useAuth } from "../../hooks/useAuth";
+import Chart from "./Chart";
+import SubscriptionsList from "./SubscriptionsList";
+import FullSizeContainer from "../../ui-kit/FullSizeContainer";
 
-const Chart = ({ subscriptionsCountByCountry }) => {
-  const theme = useTheme();
-  const chartContainerRef = useRef();
+const HomePage = ({ youtubeSubscriptions, onUnsubscribe, user }) => {
+  const intl = useIntl();
+  const { locale } = useLocales();
 
-  return (
-    <Box
-      flex={1}
-      ref={chartContainerRef}
-      sx={
-        chartContainerRef?.current
-          ? { height: chartContainerRef.current?.clientWidth }
-          : {}
-      }
-    >
-      {chartContainerRef.current && (
-        <ResponsiveContainer>
-          <BarChart
-            data={subscriptionsCountByCountry}
-            style={{
-              fontFamily: theme.typography.fontFamily,
-            }}
-          >
-            <Tooltip />
-            <XAxis dataKey="countryNameWithFlag" />
-            <Bar fill={theme.palette.primary.main} dataKey="count" />
-          </BarChart>
-        </ResponsiveContainer>
-      )}
-    </Box>
-  );
-};
-
-const HomePage = ({ youtubeSubscriptions, onUnsubscribe }) => {
-  const [expanded, setExpanded] = useState();
-  const [selectedSubscriptionIds, setSelectedSubscriptionIds] = useState({});
-
-  const handleExpandedChange = useCallback(
-    (value) => (event, isExpanded) => {
-      setExpanded(isExpanded ? value : null);
-    },
-    []
-  );
-
-  const handleSelectSubscription = useCallback(
-    (subscriptionId) => (e) => {
-      setSelectedSubscriptionIds((selectedSubscriptionIds) => {
-        const { checked } = e.target;
-
-        if (checked) {
-          return {
-            ...selectedSubscriptionIds,
-            [subscriptionId]: true,
-          };
-        }
-
-        const newSelectedSubscriptionIds = { ...selectedSubscriptionIds };
-        delete newSelectedSubscriptionIds[subscriptionId];
-
-        return newSelectedSubscriptionIds;
-      });
-    },
-    []
-  );
-
-  const youtubeSubscriptionsByCountry = useMemo(
-    () => fpGroupBy("country")(youtubeSubscriptions),
-    [youtubeSubscriptions]
+  const getCountryName = useCallback(
+    (country) =>
+      new Intl.DisplayNames([locale], {
+        type: "region",
+      }).of(country),
+    [locale]
   );
 
   const subscriptionsCountByCountry = useMemo(
@@ -114,152 +39,41 @@ const HomePage = ({ youtubeSubscriptions, onUnsubscribe }) => {
           entries.map(([country, count]) => ({
             country,
             count,
-            countryName: country ? countries.getCountry(country) : "-",
             countryNameWithFlag: country
-              ? `${countries.getCountry(country)} ${getUnicodeFlagIcon(
-                  country
-                )}`
-              : "-",
+              ? `${getCountryName(country)} ${getUnicodeFlagIcon(country)}`
+              : intl.formatMessage({
+                  defaultMessage: "Country not specified",
+                  id: "home.countryNotSpecified",
+                }),
           })),
         (value) => Object.entries(value),
         fpCountBy("country")
       )(youtubeSubscriptions),
-    [youtubeSubscriptions]
+    [getCountryName, intl, youtubeSubscriptions]
   );
 
-  const subscriptionsById = useMemo(
-    () => keyBy(youtubeSubscriptions, "subscriptionId"),
-    [youtubeSubscriptions]
-  );
-
-  useEffect(() => {
-    setSelectedSubscriptionIds({});
-  }, [youtubeSubscriptions]);
+  if (youtubeSubscriptions.length === 0) {
+    return (
+      <FullSizeContainer>
+        <Typography variant="body1">
+          <FormattedMessage
+            defaultMessage="No subscriptions in your YouTube account"
+            id="home.noSubscriptions"
+          />
+        </Typography>
+      </FullSizeContainer>
+    );
+  }
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
-        <Stack direction="column" spacing={2} flex={1}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md="auto" sx={{ flex: 1 }}>
-              <Stack direction="row" spacing={2} alignItems="center">
-                <SubscriptionsIcon />
-                <Typography variant="h6">
-                  Your Youtube subscriptions by channel country
-                </Typography>
-              </Stack>
-            </Grid>
-            <Grid item xs={12} md="auto">
-              {Object.keys(selectedSubscriptionIds).length !== 0 && (
-                <Button
-                  color="error"
-                  variant="contained"
-                  onClick={onUnsubscribe({
-                    title: Object.keys(selectedSubscriptionIds)
-                      .map(
-                        (subscriptionId) =>
-                          subscriptionsById[subscriptionId].title
-                      )
-                      .join(", "),
-                    subscriptionIds: Object.keys(selectedSubscriptionIds),
-                  })}
-                >
-                  Unsubscribe from {Object.keys(selectedSubscriptionIds).length}{" "}
-                  selected channel
-                  {Object.keys(selectedSubscriptionIds).length > 1 ? "s" : ""}
-                </Button>
-              )}
-            </Grid>
-          </Grid>
-
-          <Stack direction="column">
-            {subscriptionsCountByCountry.map(
-              ({ country, countryName, count }) => (
-                <Accordion
-                  TransitionProps={{ unmountOnExit: true }}
-                  key={country}
-                  expanded={expanded === country}
-                  onChange={handleExpandedChange(country)}
-                  sx={country === "RU" ? { backgroundColor: red[100] } : {}}
-                >
-                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>
-                      {countryName} {country && getUnicodeFlagIcon(country)} (
-                      {count})
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <List dense>
-                      {youtubeSubscriptionsByCountry[country].map(
-                        ({
-                          id,
-                          title,
-                          subscriptionId,
-                          customUrl,
-                          thumbnails,
-                          subscribedAt,
-                        }) => (
-                          <Link
-                            key={id}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{ textDecoration: "none", color: "inherit" }}
-                            href={`https://www.youtube.com/${customUrl}`}
-                          >
-                            <ListItemButton>
-                              <ListItemIcon>
-                                <Checkbox
-                                  checked={
-                                    selectedSubscriptionIds[subscriptionId]
-                                  }
-                                  onChange={handleSelectSubscription(
-                                    subscriptionId
-                                  )}
-                                />
-                              </ListItemIcon>
-                              <ListItemAvatar>
-                                <Avatar src={thumbnails.default.url}></Avatar>
-                              </ListItemAvatar>
-                              <ListItemText
-                                primary={title}
-                                secondary={
-                                  <MuiTooltip
-                                    title={new Date(
-                                      subscribedAt
-                                    ).toLocaleString()}
-                                  >
-                                    <span>
-                                      Subscribed{" "}
-                                      {formatDistanceToNow(
-                                        new Date(subscribedAt),
-                                        {
-                                          addSuffix: true,
-                                        }
-                                      )}
-                                    </span>
-                                  </MuiTooltip>
-                                }
-                              />
-                              <Button
-                                color="error"
-                                onClick={onUnsubscribe({
-                                  title,
-                                  subscriptionIds: [subscriptionId],
-                                })}
-                              >
-                                Unsubscribe
-                              </Button>
-                            </ListItemButton>
-                          </Link>
-                        )
-                      )}
-                    </List>
-                  </AccordionDetails>
-                </Accordion>
-              )
-            )}
-          </Stack>
-        </Stack>
+        <SubscriptionsList
+          youtubeSubscriptions={youtubeSubscriptions}
+          subscriptionsCountByCountry={subscriptionsCountByCountry}
+          user={user}
+          onUnsubscribe={onUnsubscribe}
+        />
       </Grid>
       <Grid item xs={12} md={6}>
         <Chart subscriptionsCountByCountry={subscriptionsCountByCountry} />
@@ -269,6 +83,7 @@ const HomePage = ({ youtubeSubscriptions, onUnsubscribe }) => {
 };
 
 const HomePageContainer = () => {
+  const { user } = useAuth();
   const {
     isYoutubeSubscriptionsLoading,
     youtubeSubscriptions,
@@ -293,9 +108,16 @@ const HomePageContainer = () => {
             });
             closeModal();
           },
-          message: `You want to delete subscription${
-            subscriptionIds.length ? "s" : ""
-          } for channel${subscriptionIds.length > 1 ? "s" : ""} "${title}"?`,
+          message: (
+            <FormattedMessage
+              defaultMessage={`You want to delete {count, plural, one {subscription} other {subscriptions}} for {count, plural, one {channel} other {channels}} "{title}"?`}
+              id="home.unsubscribeConfirmation"
+              values={{
+                count: subscriptionIds.length,
+                title,
+              }}
+            />
+          ),
         });
       },
     [
@@ -313,6 +135,7 @@ const HomePageContainer = () => {
     <HomePage
       youtubeSubscriptions={youtubeSubscriptions}
       onUnsubscribe={handleUnsubscribe}
+      user={user}
     />
   );
 };

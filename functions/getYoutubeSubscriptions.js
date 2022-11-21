@@ -49,7 +49,7 @@ const handler =
       await Promise.all(
         chunk(subscriptions, 50).map(async (subscriptionsChunk) => {
           const { data } = await youtube.channels.list({
-            part: "snippet",
+            part: "snippet,statistics",
             id: subscriptionsChunk
               .map(({ snippet }) => snippet.resourceId.channelId)
               .join(","),
@@ -79,12 +79,14 @@ const handler =
           thumbnails,
           publishedAt,
         },
+        statistics,
       }) => ({
         id,
         title,
         description,
         customUrl,
         country: country ?? "",
+        statistics,
         thumbnails,
         createdAt: publishedAt,
         subscriptionId: subscriptionsByChannelId[id].id,

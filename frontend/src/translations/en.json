@@ -1,0 +1,23 @@
+{
+  "confirmationModal.cancel": "Cancel",
+  "confirmationModal.confirm": "Confirm",
+  "confirmationModal.title": "Are you sure?",
+  "home.countryNotSpecified": "Country not specified",
+  "home.noSubscriptions": "No subscriptions in your YouTube account",
+  "home.subscribersCount": "{count} subscribers",
+  "home.subscriptionCreatedAt": "Created {createdAt}",
+  "home.subscriptionSubscribedAt": "Subscribed {subscribedAt}",
+  "home.subscriptionsByCountry": "Your Youtube subscriptions by channel country ({count})",
+  "home.unsubscribe": "Unsubscribe",
+  "home.unsubscribeConfirmation": "You want to delete {count, plural, one {subscription} other {subscriptions}} for {count, plural, one {channel} other {channels}} \"{title}\"?",
+  "home.unsubscribeSelected": "Unsubscribe from {count} selected {count, plural, one {channel} other {channels}}",
+  "localeSelect.language": "Language",
+  "missingScopesModal.manageYoutube": "Manage your YouTube account",
+  "missingScopesModal.title": "Additional permissions are required to perform this action",
+  "signInPage.additionalPermissions": "Additional permissions are required to read your Youtube subscriptions. You can remove permission anytime from your",
+  "signInPage.googleAccount": "Google Account",
+  "signInPage.missingRequiredScopes": "Required account permissions wasn't granted.",
+  "signInPage.signInWithGoogle": "Sign in with Google",
+  "signInPage.somethingWentWrong": "Something went wrong.",
+  "signInPage.viewPermission": "View your YouTube account"
+}

@@ -11,23 +11,26 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "countries-code": "^1.1.0",
     "country-flag-icons": "^1.5.5",
     "date-fns": "^2.29.3",
     "firebase": "^9.14.0",
+    "language-name-map": "^0.3.0",
     "notistack": "^2.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-intl": "^6.2.1",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
     "recharts": "^2.1.16",
+    "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "extract": "formatjs extract 'src/**/*.js' --format simple --out-file src/translations/en.json"
   },
   "eslintConfig": {
     "extends": [
@@ -47,5 +50,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@formatjs/cli": "^5.1.3"
   }
 }

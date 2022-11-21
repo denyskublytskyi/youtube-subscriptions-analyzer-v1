@@ -10,6 +10,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 import { useAuth } from "../../hooks/useAuth";
 import Box from "@mui/material/Box";
+import LocaleSelect from "../../ui-kit/LocaleSelect";
 
 const Header = () => {
   const { user, signOut } = useAuth();
@@ -21,6 +22,11 @@ const Header = () => {
       <Toolbar variant="dense">
         <Stack spacing={2} direction="row" flex={1} alignItems="center">
           <Box flex={1} />
+          <LocaleSelect
+            variant="standard"
+            label=""
+            InputProps={{ disableUnderline: true }}
+          />
           <Avatar src={user.photoURL}>
             {firstName.toUpperCase()[0]}
             {lastName.toUpperCase()[0]}

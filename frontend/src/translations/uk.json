@@ -1,0 +1,23 @@
+{
+  "confirmationModal.cancel": "Скасувати",
+  "confirmationModal.confirm": "Підтвердити",
+  "confirmationModal.title": "Ви впевені?",
+  "home.countryNotSpecified": "Країна не вказана",
+  "home.noSubscriptions": "У вашому обліковому записі YouTube немає підписок",
+  "home.subscribersCount": "{count} підписників",
+  "home.subscriptionCreatedAt": "Створено {createdAt}",
+  "home.subscriptionSubscribedAt": "Підписалися {subscribedAt}",
+  "home.subscriptionsByCountry": "Ваші підписки на Youtube за країною каналу ({count})",
+  "home.unsubscribe": "Відписатися",
+  "home.unsubscribeConfirmation": "Ви хочете видалити {count, plural, one {підписку} other {підписки}} на {count, plural, one {канал} other {канали}} \"{title}\"?",
+  "home.unsubscribeSelected": "Відписатися від {count} {count, plural, one {вибраного каналу} other {вибраних каналів}}",
+  "localeSelect.language": "Мова",
+  "missingScopesModal.manageYoutube": "Manage your YouTube account",
+  "missingScopesModal.title": "Для виконання цієї дії потрібні додаткові дозволи",
+  "signInPage.additionalPermissions": "Щоб читати ваші підписки на Youtube, потрібні додаткові дозволи. Ви можете будь-коли видалити дозвіл зі свого",
+  "signInPage.googleAccount": "облікового запису Google",
+  "signInPage.missingRequiredScopes": "Необхідні дозволи облікового запису не надано.",
+  "signInPage.signInWithGoogle": "Увійдіть за допомогою Google",
+  "signInPage.somethingWentWrong": "Щось пішло не так.",
+  "signInPage.viewPermission": "Переглядати ваш обліковий запис YouTube"
+}

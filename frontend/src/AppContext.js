@@ -14,6 +14,7 @@ const AppContext = createContext({
   isYoutubeSubscriptionsLoading: false,
   youtubeSubscriptions: [],
   fetchYoutubeSubscriptions: noop,
+  deleteYoutubeSubscriptionsByIds: noop,
 });
 
 const AppContextProvider = ({ children }) => {
